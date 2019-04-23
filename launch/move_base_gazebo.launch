@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+    <arg name="robot_description_path" />
+    <arg name="namespace_prefix" default="robot_namespace" />
+    
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" ns="$(arg namespace_prefix)" >
+        <!-- <param name="controller_frequency" value="2.0" /> -->
+        <!-- yerel planlayıcının frekansı -->
+        <!--<param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />-->
+        <!-- kullanılan local planlayıcı -->
+        <!-- <param name="recovery_behavior_enabled" value="false" />-->
+        <!-- false olunca kurtarma hareketlerine girmez, plan bulamadığında görevi iptal eder -->
+        <!-- <param name="planner_frequency" value="1.0" /> -->
+        <!-- global planlayıcının frekans -->
+        <!--<param name="base_global_planner" value="navfn/NavfnROS" />-->
+        <!-- kullanılan global planlayıcı -->
+        <!-- <param name="planner_patience" value="0.00001"/>  -->
+        <!-- param name="conservative_reset_dist" value="3.0" -->
+        <!-- param name="sim_time" value="1.0" -->
+        <!-- param name="sim_granularity" value=" 0.025" -->
+        <!-- param name="vx_samples" value="3" -->
+        <!-- param name="vtheta_samples " value="20" -->
+        <!-- move_base düğümünün parametreleri (kurtarma hareketine ait olanlarda) -->
+        <!--
+        <rosparam param="recovery_behaviors"> [{ name: "conservative_reset", type: "clear_costmap_recovery/ClearCostmapRecovery"} ,
+        {name: "rotate_recovery", type: "rotate_recovery/RotateRecovery"} , {name: "aggressive_reset", type: "clear_costmap_recovery/ClearCostmapRecovery"}] </rosparam>
+        -->
+        <!-- kurtarma hareketlerinin gerçekleşme sırası -->
+        <rosparam file="$(find multirobot)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find multirobot)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find multirobot)/config/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find multirobot)/config/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find multirobot)/config/base_local_planner_params.yaml" command="load" />
+
+        <param name="global_costmap/global_frame" value="$(arg namespace_prefix)_tf/map"/>
+        <param name="global_costmap/robot_base_frame" value="$(arg namespace_prefix)_tf/base_link"/>
+  
+  
+        <param name="local_costmap/global_frame" value="$(arg namespace_prefix)_tf/odom"/>
+        <param name="local_costmap/robot_base_frame" value="$(arg namespace_prefix)_tf/base_link"/>
+
+        
+        
+		<!-- paramater overrides for multirobot purpose-->
+		
+
+<!--
+			<param name="global_costmap/base_scan/sensor_frame" value="(arg namespace_prefix)/base_laser_link" />
+-->
+<!--
+			<param name="global_costmap/base_scan/topic" value="$(arg namespace_prefix)/scan" />
+-->
+<!--
+			<param name="global_costmap/global_frame" value="map" />
+-->
+
+
+<!--
+			<param name="local_costmap/base_scan/sensor_frame" value="(arg namespace_prefix)/base_laser_link" />
+-->
+<!--
+			<param name="local_costmap/base_scan/topic" value="$(arg namespace_prefix)/scan" />
+-->
+<!--
+			<param name="local_costmap/global_frame" value="$(arg namespace_prefix)/odom" />
+-->
+
+<!--
+			
+			<param name="global_costmap/robot_base_frame" value="$(arg namespace_prefix)/base_link" />
+			<param name="local_costmap/robot_base_frame" value="$(arg namespace_prefix)/base_link" />
+-->
+    </node>
+</launch>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+  <!-- No namespace here as we will share this description. 
+       Access with slash at the beginning -->
+  <!--<param name="robot_description"
+         command="$(find xacro)/xacro.py $(find turtlebot_description)/urdf/turtlebot_gazebo.urdf.xacro" /> -->
+  
+ 
+  
+    <!-- BEGIN ROBOT 1-->
+    
+    <group ns="robot1">
+        <param name="tf_prefix" value="robot1_tf" />
+    </group>
+    <include file="$(find multirobot)/launch/one_robot.launch" >
+        <arg name="init_pose_x" value="-1.0323" />
+        <arg name="init_pose_y" value="15.2218"/>
+        <arg name="init_pose_z" value="0.1499"/>
+        <arg name="init_pose_a" value="3.14"/>
+        <arg name="robot_name"  value="robot1" />
+    </include>
+    
+ 
+    
+    <!-- BEGIN ROBOT 2 -->
+    
+    <group ns="robot2">
+        <param name="tf_prefix" value="robot2_tf" />
+    </group>
+    <include file="$(find multirobot)/launch/one_robot.launch" >
+        <arg name="init_pose_x" value="4.9074" />
+        <arg name="init_pose_y" value="16.2672"/>
+        <arg name="init_pose_z" value="0.1499"/>
+        <arg name="init_pose_a" value="1.55"/>
+        <arg name="robot_name"  value="robot2" />
+    </include>
+
+    
+    <!-- BEGIN ROBOT 3 -->
+
+    <group ns="robot3">
+        <param name="tf_prefix" value="robot3_tf" />
+    </group>
+    <include file="$(find multirobot)/launch/one_robot.launch" >
+        <arg name="init_pose_x" value="1" />
+        <arg name="init_pose_y" value="22"/>
+        <arg name="init_pose_z" value="0.1499"/>
+        <arg name="init_pose_a" value="3.14"/>
+        <arg name="robot_name"  value="robot3" />
+    </include>
+</launch>
